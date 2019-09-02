@@ -1,11 +1,16 @@
 "use strict";
 const mongoose = require("../db/db");
 const Schema = mongoose.Schema;
+const uuidv1 = require("uuid/v1");
 
 const UserSchema = new Schema({
-    userName: {
+    nickname: {
         type: String,
-        required: true
+        default: uuidv1()
+    },
+    userId: {
+        type: String,
+        default: uuidv1()
     },
     email: {
         type: String,
@@ -15,10 +20,7 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    id: {
-        type: Number, 
-        default: 1
-    },
+    
     create_time: {
         type: Date, default: Date.now()
     },

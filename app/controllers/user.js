@@ -1,6 +1,6 @@
 "use strict";
 const UserModel = require("../models/user");
-const {encrypt_pubKey,decrypt_prvKey} = require("../utils/rsaUtil");
+const {decrypt_prvKey} = require("../utils/rsaUtil");
 const jwt = require("jsonwebtoken");
 
 class User {
@@ -18,6 +18,7 @@ class User {
         let userInfo = UserModel.findOne({email}, function(err, userInfo) {
             const newPassword = decrypt_prvKey(userInfo.password);
             if(password === newPassword) {
+                console.log("true result")
                 const token = jwt.sign({
                     userId: userInfo.userId
                 }, "my_token", {expiresIn: "2h"});
