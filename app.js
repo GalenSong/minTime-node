@@ -6,6 +6,9 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const router = require('./app/routes/index')
+const errorHandler = require("./app/middleware/error")
+const {publicKey} = require("./app/utils/rsaUtil")
+const jwt = require("koa-jwt");
 
 // error handler
 onerror(app)
@@ -40,5 +43,13 @@ app.on('error', (err, ctx) => {
 });
 
 // app.use(emailService);
+app.use(errorHandler);
+
+app.use(jwt({secret: publicKey}).unless({
+  path: [
+    /^\/login/,
+    /^\/register/,
+  ]
+}))
 
 module.exports = app

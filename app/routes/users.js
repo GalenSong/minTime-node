@@ -1,10 +1,9 @@
 "use strict"
-const User = require("../controllers/user");
+const UserController = require("../controllers/userController");
 const router = require('koa-router')();
 const {publicKey} = require("../utils/rsaUtil");
 
-// router.post("/signup", User.register);
-router.post("/signup", User.register);
+router.post("/register", UserController.register);
 
 router.get("/getPublicKey", (ctx,next) => {
     ctx.body = {
@@ -12,6 +11,13 @@ router.get("/getPublicKey", (ctx,next) => {
     }
 });
 
-router.post("/login", User.login);
+router.get("/getData", (ctx, next) => {
+    ctx.body = {
+        code: 1,
+        status: "SUCCESS"
+    }
+})
+
+router.post("/login", UserController.login);
 
 module.exports = router;
